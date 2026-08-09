@@ -1,4 +1,4 @@
-```python
+
 import json
 import os
 import sys
@@ -285,4 +285,3 @@ def isolated_state():
 
     reset_session_manager()
     reset_interview_service()
-```
