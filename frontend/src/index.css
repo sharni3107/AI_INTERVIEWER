@@ -1,0 +1,202 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+:root {
+  --bg-amoled: #000000;
+  --surface-1: #05050B;
+  --surface-2: #07070D;
+  --surface-3: #08080F;
+
+  --card-bg: rgba(124, 58, 237, 0.035);
+  --card-bg-hover: rgba(124, 58, 237, 0.06);
+  --card-border: rgba(124, 58, 237, 0.22);
+  --card-border-strong: rgba(124, 58, 237, 0.40);
+
+  --purple-500: #7C3AED;
+  --purple-400: #8B5CF6;
+  --purple-300: #A78BFA;
+  --purple-200: #C084FC;
+  --purple-900: #4C1D95;
+
+  --purple-glow: rgba(124, 58, 237, 0.35);
+  --purple-glow-strong: rgba(139, 92, 246, 0.45);
+  --purple-glow-soft: rgba(124, 58, 237, 0.08);
+  --purple-glow-active: rgba(124, 58, 237, 0.2);
+
+  --blue-500: #3B82F6;
+  --cyan-500: #14B8A6;
+  --success: #4ADE80;
+  --warning: #FBBF24;
+  --danger: #EF4444;
+
+  --text-primary: #F8F7FF;
+  --text-soft: #EDE9FE;
+  --text-secondary: #A09AAE;
+  --text-muted: #A09AAE;
+  --text-vmuted: #6F6A78;
+
+  --radius-lg: 20px;
+  --radius-md: 14px;
+  --radius-sm: 12px;
+
+  --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Layered, premium shadow tokens - subtle depth, not glow. Reused
+     everywhere so shadow treatment stays consistent across surfaces. */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.5);
+  --shadow-card: 0 8px 30px rgba(0, 0, 0, 0.35);
+  --shadow-card-hover: 0 8px 30px rgba(0, 0, 0, 0.4), 0 0 20px rgba(124, 58, 237, 0.08);
+
+  /* Mathematically consistent spacing scale */
+  --space-1: 8px;
+  --space-2: 12px;
+  --space-3: 16px;
+  --space-4: 20px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 40px;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+
+body {
+  background: var(--bg-amoled);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  font-kerning: normal;
+  letter-spacing: -0.006em;
+  min-height: 100vh;
+  overflow-x: hidden;
+  display: flex;
+  justify-content: center;
+}
+
+h1, h2, h3, h4, h5 {
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+/* App is a fixed mobile-width frame on every screen size, matching the
+   reference product's phone-shaped layout - not a responsive desktop grid.
+   width (not just max-width) + border-box keeps this a true 390px frame
+   regardless of inner padding/borders. */
+#root {
+  width: 390px;
+  max-width: 100vw;
+  min-height: 100vh;
+  margin: 0 auto;
+  background: var(--bg-amoled);
+  position: relative;
+  overflow-x: hidden;
+  box-sizing: border-box;
+}
+
+@media (max-width: 390px) {
+  #root { width: 100vw; }
+}
+
+a { color: inherit; text-decoration: none; }
+button { font-family: inherit; }
+
+button:focus-visible, input:focus-visible, textarea:focus-visible, a:focus-visible {
+  outline: 2px solid var(--purple-400);
+  outline-offset: 2px;
+}
+
+::selection { background: var(--purple-glow-active); color: var(--text-primary); }
+
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: var(--bg-amoled); }
+::-webkit-scrollbar-thumb { background: rgba(139, 92, 246, 0.25); border-radius: 8px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(139, 92, 246, 0.4); }
+
+.page-shell {
+  min-height: 100vh;
+  background: var(--bg-amoled);
+  padding-bottom: 48px;
+}
+
+.glass-card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  transition: border-color 200ms var(--ease-out), box-shadow 200ms var(--ease-out),
+    transform 200ms var(--ease-out);
+}
+
+.glass-card:hover {
+  border-color: rgba(139, 92, 246, 0.18);
+  box-shadow: var(--shadow-card-hover);
+  transform: translateY(-1px);
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--purple-500), var(--purple-400));
+  color: #fff;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-weight: 700;
+  font-size: 15px;
+  padding: 14px 24px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: transform 150ms var(--ease-out), filter 150ms var(--ease-out);
+}
+
+.btn-primary:hover:not(:disabled) {
+  filter: brightness(1.08);
+  transform: translateY(-1px);
+}
+
+.btn-primary:active:not(:disabled) { transform: scale(0.98); }
+.btn-primary:disabled { opacity: 0.6; cursor: not-allowed; }
+
+.btn-secondary {
+  background: transparent;
+  color: var(--text-secondary);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+  font-size: 14px;
+  padding: 12px 20px;
+  cursor: pointer;
+  transition: all 150ms var(--ease-out);
+}
+
+.btn-secondary:hover {
+  color: var(--text-primary);
+  border-color: rgba(139, 92, 246, 0.3);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.text-gradient-purple {
+  background: linear-gradient(135deg, var(--purple-200), var(--purple-400));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.spinner {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.25);
+  border-top-color: #fff;
+  animation: spin 700ms linear infinite;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes fadeSlideUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+.fade-slide-up { animation: fadeSlideUp 500ms var(--ease-out) both; }
+.fade-in { animation: fadeIn 500ms var(--ease-out) both; }
