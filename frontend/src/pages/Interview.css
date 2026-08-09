@@ -1,0 +1,113 @@
+.iv-main {
+  padding: 20px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.iv-progress-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.iv-rules-card {
+  padding: 20px 22px;
+}
+
+.iv-rules-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--purple-300);
+  margin: 0 0 12px 0;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.iv-rules-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.iv-rules-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.iv-rules-list li::before {
+  content: none;
+}
+
+.iv-rule-icon {
+  flex-shrink: 0;
+  width: 30px;
+  height: 30px;
+  border-radius: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(124, 58, 237, 0.1);
+  border: 1px solid rgba(139, 92, 246, 0.25);
+  color: var(--purple-300);
+  margin-top: 1px;
+}
+
+.iv-rule-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+
+.iv-rule-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.iv-rule-desc {
+  font-size: 12.5px;
+  line-height: 1.55;
+  color: var(--text-secondary);
+}
+
+.iv-loading-card, .iv-error-card {
+  padding: 40px 28px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+
+.iv-loading-text {
+  color: var(--text-secondary);
+  font-size: 14px;
+}
+
+.iv-error-text {
+  color: var(--text-secondary);
+  font-size: 14px;
+}
+
+.iv-error-title {
+  color: var(--danger);
+  font-weight: 700;
+  font-size: 15px;
+  margin: 0;
+}
+
+.iv-end-bar {
+  display: flex;
+  justify-content: flex-end;
+}
+
+
