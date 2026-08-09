@@ -27,6 +27,7 @@ htmlcov/
 
 # OS
 .DS_Store
-Thumbs.dbfrontend/.vite/
+Thumbs.db
+frontend/.vite/
 
 frontend/.vite/
