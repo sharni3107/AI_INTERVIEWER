@@ -236,11 +236,9 @@ class InterviewOrchestrator:
             )
 
             objective = (
-                "Follow up on: "
-                f"{evaluation.suggested_follow_up_area "
-                "or 'the previous gap'}."
-            )
-
+    "Follow up on: "
+    f"{evaluation.suggested_follow_up_area or 'the previous gap'}."
+)
             is_follow_up = True
 
         # --------------------------------------------------------------

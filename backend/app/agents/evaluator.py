@@ -32,7 +32,7 @@ from app.core.llm_client import (
     get_llm_client,
 )
 from app.schemas.evaluation import EvaluationRecord
-from app.schemas.interview import QuestionRecord
+from app.state.interview_state import QuestionRecord
 from app.services.curriculum_service import (
     CurriculumService,
     get_curriculum_service,

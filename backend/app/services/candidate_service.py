@@ -1,26 +1,17 @@
+
 """
 Candidate service: normalizes candidate payloads and decides, from the
 candidate's actual progress + the curriculum, which curriculum day to probe
 next.
 
-This replaces what would otherwise be a separate LLM-backed "planner agent".
-Day selection is a deterministic decision: pick the next day the candidate
-actually engaged with, with weak spots first.
-
-The LLM is reserved for the things that actually benefit from it:
-- phrasing the question (interviewer)
-- scoring the answer (evaluator)
-- writing the final report (feedback)
+Day selection is deterministic. RAG is optional and is used only when
+available to discover semantically related curriculum days.
 """
 
 from __future__ import annotations
 
 from typing import Any, Optional
 
-from app.rag.retriever import (
-    CurriculumRetriever,
-    get_curriculum_retriever,
-)
 from app.services.curriculum_service import (
     CurriculumService,
     get_curriculum_service,
@@ -29,6 +20,19 @@ from app.utils.candidate_normalizer import (
     InvalidCandidateDataError,
     normalize_candidate,
 )
+
+# RAG is optional. The candidate service must work without it.
+try:
+    from app.rag.retriever import (
+        CurriculumRetriever,
+        get_curriculum_retriever,
+    )
+except ModuleNotFoundError:
+    CurriculumRetriever = Any
+
+    def get_curriculum_retriever() -> None:
+        return None
+
 
 __all__ = [
     "InvalidCandidateDataError",
@@ -41,7 +45,7 @@ def get_prioritized_days(
     candidate: dict[str, Any],
     covered_days: set[int],
     curriculum_service: Optional[CurriculumService] = None,
-    curriculum_retriever: Optional[CurriculumRetriever] = None,
+    curriculum_retriever: Optional[Any] = None,
 ) -> list[int]:
     """
     Returns curriculum days worth asking about next, in priority order.
@@ -53,27 +57,29 @@ def get_prioritized_days(
        - excluding explicitly skipped days
        - excluding days already covered in this session
 
-       If the candidate has no mission data, falls back to all curriculum
-       days except skipped days.
+       If the candidate has no progress data, falls back to all
+       curriculum days except skipped days.
 
-    2. Struggled days are prioritized:
-       - 3+ attempts
-       - or attempted but not passed
+    2. Struggled days are prioritized.
 
-       These days represent the candidate's genuine weak areas.
+    3. If fewer than two struggled days are available and RAG is
+       configured, RAG may be used to discover semantically related
+       curriculum days.
 
-    3. If fewer than two struggled days are available, RAG is used to find
-       curriculum days semantically related to the candidate's struggled
-       mission titles.
-
-    4. If every eligible day has already been covered, previously covered
-       days may be revisited for deeper probing.
+    4. If every eligible day has already been covered, previously
+       covered days may be revisited for deeper probing.
     """
 
-    curriculum_service = curriculum_service or get_curriculum_service()
-    curriculum_retriever = (
-        curriculum_retriever or get_curriculum_retriever()
+    curriculum_service = (
+        curriculum_service or get_curriculum_service()
     )
+
+    # RAG is optional. Do not make candidate prioritization depend on it.
+    if curriculum_retriever is None:
+        try:
+            curriculum_retriever = get_curriculum_retriever()
+        except Exception:
+            curriculum_retriever = None
 
     passed = set(candidate.get("passed_days", []))
     failed = set(candidate.get("failed_days", []))
@@ -118,9 +124,11 @@ def get_prioritized_days(
         if day not in struggled
     ]
 
-    # If there are not enough exact struggled days, use RAG to discover
-    # semantically related curriculum days.
-    if len(struggled_days) < 2:
+    # RAG is an optional enhancement.
+    #
+    # If RAG is unavailable, this section is simply skipped and the
+    # deterministic prioritization above is still returned.
+    if len(struggled_days) < 2 and curriculum_retriever is not None:
         day_titles = candidate.get("day_titles", {})
 
         queries = [
@@ -130,25 +138,30 @@ def get_prioritized_days(
         ]
 
         if queries:
-            rag_days = (
-                curriculum_retriever
-                .retrieve_days_for_topics(queries)
-            )
+            try:
+                rag_days = curriculum_retriever.retrieve_days_for_topics(
+                    queries
+                )
 
-            rag_days = [
-                day
-                for day in rag_days
-                if day in remaining
-            ]
+                rag_days = [
+                    day
+                    for day in rag_days
+                    if day in remaining
+                ]
 
-            for day in rag_days:
-                if day not in struggled_days:
-                    struggled_days.append(day)
+                for day in rag_days:
+                    if day not in struggled_days:
+                        struggled_days.append(day)
 
-            other_days = [
-                day
-                for day in other_days
-                if day not in struggled_days
-            ]
+                other_days = [
+                    day
+                    for day in other_days
+                    if day not in struggled_days
+                ]
+
+            except Exception:
+                # RAG failure must never break candidate prioritization.
+                pass
 
     return struggled_days + other_days
+

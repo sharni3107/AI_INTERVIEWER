@@ -1,4 +1,4 @@
-```python
+
 """
 Tests for the interview data/session/API side.
 
@@ -28,7 +28,7 @@ from app.utils.candidate_normalizer import (
     InvalidCandidateDataError,
     normalize_candidate,
 )
-from tests.conftest import SAMPLE_CANDIDATE
+from tests.confest import SAMPLE_CANDIDATE
 
 
 client = TestClient(app)
@@ -591,4 +591,3 @@ def test_message_after_completion_is_rejected():
     )
 
     assert response_after_completion.status_code == 400
-```

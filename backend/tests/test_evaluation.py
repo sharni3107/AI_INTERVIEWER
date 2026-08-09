@@ -8,18 +8,16 @@ Tests for the evaluation/feedback side:
 - Feedback agent + ReportService final report shape
 - candidate_service.get_prioritized_days personalization
 """
-
 from app.agents.evaluator import EvaluatorAgent
 from app.agents.feedback import FeedbackAgent
 from app.core.llm_client import MockLLMClient
-from app.schemas.interview import QuestionRecord
+from app.state.interview_state import InterviewState, QuestionRecord
 from app.services.candidate_service import get_prioritized_days
 from app.services.curriculum_service import get_curriculum_service
 from app.services.evaluation_service import EvaluationService
 from app.services.report_service import ReportService
-from app.state.interview_state import InterviewState
 from app.utils.candidate_normalizer import normalize_candidate
-from tests.conftest import SAMPLE_CANDIDATE
+from tests.confest import SAMPLE_CANDIDATE
 
 
 def _state() -> InterviewState:

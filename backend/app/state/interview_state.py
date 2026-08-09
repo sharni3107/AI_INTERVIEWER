@@ -15,7 +15,21 @@ from enum import Enum
 from typing import Any, Optional
 
 from app.schemas.evaluation import EvaluationRecord
-from app.schemas.interview import QuestionRecord
+from dataclasses import dataclass, field
+from enum import Enum
+from typing import Any, Optional
+
+
+@dataclass
+class QuestionRecord:
+    index: int
+    question: str
+    topic: str
+    curriculum_day: int
+    difficulty: str
+    question_type: str
+    is_follow_up: bool = False
+    reason: str = ""
 
 
 __all__ = [
