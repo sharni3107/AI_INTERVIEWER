@@ -1,0 +1,177 @@
+.res-main {
+  padding: 24px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.res-hero {
+  text-align: center;
+  padding: 32px 24px;
+}
+
+.res-badge {
+  width: 56px;
+  height: 56px;
+  margin: 0 auto 16px auto;
+  border-radius: 50%;
+  background: radial-gradient(circle at 40% 35%, var(--purple-200), var(--purple-500));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  color: #fff;
+}
+
+.res-title {
+  font-size: 22px;
+  font-weight: 800;
+  margin: 0 0 6px 0;
+}
+
+.res-subtitle {
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+.res-score-card {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 22px 20px;
+}
+
+.score-ring {
+  position: relative;
+  width: 132px;
+  height: 132px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.score-ring-center {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.score-ring-value {
+  font-size: 30px;
+  font-weight: 900;
+  color: var(--text-primary);
+  line-height: 1;
+}
+
+.score-ring-max {
+  font-size: 12px;
+  color: var(--text-muted);
+  font-weight: 600;
+  margin-top: 2px;
+}
+
+.score-ring-label {
+  display: none;
+}
+
+.res-score-side {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 0;
+}
+
+.res-readiness-tag {
+  display: inline-block;
+  align-self: flex-start;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  background: rgba(74, 222, 128, 0.12);
+  color: var(--success);
+}
+
+.res-readiness-tag.medium {
+  background: rgba(251, 191, 36, 0.12);
+  color: var(--warning);
+}
+
+.res-readiness-tag.low {
+  background: rgba(139, 92, 246, 0.14);
+  color: var(--purple-300);
+}
+
+.res-score-note {
+  font-size: 12px;
+  line-height: 1.6;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+.res-section {
+  padding: 20px 20px;
+}
+
+.res-section-title {
+  font-size: 15px;
+  font-weight: 700;
+  margin: 0 0 12px 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.res-section-title.strengths { color: var(--success); }
+.res-section-title.gaps { color: var(--warning); }
+.res-section-title.next { color: var(--purple-300); }
+
+.res-summary-text {
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+.res-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.res-list li {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  padding-left: 18px;
+  position: relative;
+}
+
+.res-list li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 8px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.res-actions {
+  display: flex;
+  gap: 14px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.res-actions { flex-direction: column; }
+.res-actions .btn-primary, .res-actions .btn-secondary { width: 100%; }
